@@ -128,7 +128,8 @@ namespace MicroRabbit.Infra.Bus
                     var eventType = _eventTypes.SingleOrDefault(t => t.Name == eventName);
                     var @event = JsonConvert.DeserializeObject(message, eventType);
                     var ConcreteType = typeof(IEventHandler<>).MakeGenericType(eventType);
-                    await (Task)ConcreteType.GetMethod("Handle").Invoke(handler, new object[]
+                    // invoke the main method will handle any situations,those invoked from service bus or rabbitmq bus.
+                    await (Task)ConcreteType.GetMethod("Handle").Invoke(handler, new object[]     // new object is dynamic  // will route to the right handler
                     {
                         @event
                     });
