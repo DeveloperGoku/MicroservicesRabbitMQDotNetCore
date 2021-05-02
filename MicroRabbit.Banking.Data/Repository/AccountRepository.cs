@@ -18,7 +18,7 @@ namespace MicroRabbit.Banking.Data.Repository
 
         public IEnumerable<Account> GetAccounts()
         {
-            throw new NotImplementedException();
+            return _ctx.Accounts;
         }
     }
 }
